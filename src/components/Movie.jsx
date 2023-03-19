@@ -12,12 +12,11 @@ const Movie = ({ movie, viewTrailer, closeCard }) => {
 
     const dispatch = useDispatch()
 
-    const myClickHandler = (e) => {
-        if (!e) var e = window.event
-        e.cancelBubble = true
-        if (e.stopPropagation) e.stopPropagation()
-        e.target.parentElement.parentElement.classList.remove('opened')
-    }
+  const myClickHandler = (e) => {
+    e.stopPropagation();
+    const parentElement = e.target.closest(".opened");
+    parentElement && parentElement.classList.remove("opened");
+};
 
     return (
         <div className="wrapper col-3 col-sm-4 col-md-3 col-lg-3 col-xl-2">

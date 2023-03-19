@@ -53,7 +53,7 @@ const App = () => {
 
   const viewTrailer = (movie) => {
     getMovie(movie.id)
-    if (!videoKey) setOpen(true)
+    if (!videoKey) setOpen(false)
     setOpen(true)
   }
 
