@@ -16,7 +16,8 @@ const Movie = ({ movie, viewTrailer, closeCard }) => {
     e.stopPropagation();
     const parentElement = e.target.closest(".opened");
     parentElement && parentElement.classList.remove("opened");
-};
+    };
+    
 
     return (
         <div className="wrapper col-3 col-sm-4 col-md-3 col-lg-3 col-xl-2">
