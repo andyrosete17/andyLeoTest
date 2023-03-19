@@ -19,9 +19,9 @@ export const Modal: React.FC<ModalProps> = ({ children, closeModal }) => {
     }, [closeModal])
 
     return (
-        <div className="modal" onClick={closeModal}>
+        <div role='dialog' className="modal" onClick={closeModal}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-                <span className="close" onClick={closeModal}>
+                <span data-testid='close-icon' className="close" onClick={closeModal}>
                     &times;
                 </span>
                 {children}
