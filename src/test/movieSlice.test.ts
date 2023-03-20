@@ -63,9 +63,9 @@ describe('MovieSlice test', () => {
             totalPages: 14,
             totalResults: 50,
         };
- 
+
         const newState = moviesSlice.reducer(updatedState, action);
-        expect(newState).toEqual({...newState, page: 3});
+        expect(newState).toEqual({ ...newState, page: 3 });
     });
 
     it('should return the total page when current page is the last one', () => {
@@ -101,7 +101,7 @@ describe('MovieSlice test', () => {
                 total_results: 100,
             },
         };
-    
+
         const expectedState = {
             movies: moviesMock,
             fetchStatus: 'success',
