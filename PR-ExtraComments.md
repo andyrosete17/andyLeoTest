@@ -75,8 +75,7 @@ Then to use it in the app
 }
 ```
 
-## Unit test
-
 ## General Comments
 - Wouldn't be a bad idea to introduce [Storybook](https://storybook.js.org/) 
 - Components like starred and watchLater are quite similar, they are the perfect candidates to be part of a generic component
+- We should also add some opinionated  code formatter like prettier. 
