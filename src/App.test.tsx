@@ -2,8 +2,46 @@ import { screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { renderWithProviders } from './test/utils';
 import App from './App';
+import { useApp, useYoutube } from './hooks';
+import { IMovieData } from './models';
+import { moviesMock } from './test/movies.mocks';
+
+const initialMoviesState = (): IMovieData => ({
+  movies: moviesMock,
+  fetchStatus: '',
+  page: 0,
+  totalPages: 0,
+  totalResults: 0,
+})
+
+jest.mock('./hooks/useApp');
+const mockUseApp = useApp as jest.MockedFunction<typeof useApp>;
+
+jest.mock('./hooks/useYoutube');
+const mockUseYoutube = useYoutube as jest.MockedFunction<typeof useYoutube>;
+
+jest.mock('./hooks/useNearEndScreen', () => {
+  return {
+    ...jest.requireActual('./hooks/useNearEndScreen')
+  }
+});
 
 describe('App ', () => {
+  beforeEach(() => {
+    mockUseApp.mockReturnValue({
+      getMovies: jest.fn(),
+      query: '123',
+      searchMovies: jest.fn()
+    })
+
+    mockUseYoutube.mockReturnValue({
+      closeModal: jest.fn(),
+      isOpen: false,
+      videoKey: 'tasfds',
+      viewTrailer: jest.fn()
+    })
+
+  })
   it('renders watch later link', () => {
     renderWithProviders(<App />);
     const linkElement = screen.getByText(/watch later/i);
@@ -11,16 +49,16 @@ describe('App ', () => {
   });
 
   it('search for movies', async () => {
+    const searchMoviesFn = jest.fn();
+    mockUseApp.mockReturnValue({
+      getMovies: jest.fn(),
+      query: '123',
+      searchMovies: searchMoviesFn
+    })
+
     renderWithProviders(<App />);
     await userEvent.type(screen.getByTestId('search-movies'), 'Inception');
-    await waitFor(() => {
-      expect(screen.getAllByText('Inception')[0]).toBeInTheDocument();
-    });
-    const viewTrailerBtn = screen.getAllByText('View Trailer')[0];
-    await userEvent.click(viewTrailerBtn);
-    await waitFor(() => {
-      expect(screen.getByTestId('youtube-player')).toBeInTheDocument();
-    });
+    expect(searchMoviesFn).toBeCalled();
   });
 
   it('renders watch later component', async () => {

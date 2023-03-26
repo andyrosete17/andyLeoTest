@@ -1,8 +1,16 @@
-import { useEffect, useState, useRef } from 'react'
+import debounceFn from 'debounce-fn'
+import { useEffect, useState, useRef, useCallback } from 'react'
+import { useDispatch } from 'react-redux'
+import moviesSlice from '../../data/moviesSlice'
+import { useApp } from '../useApp'
 
-export default function useNearEndScreen({ distance = '350px', once = true } = {}) {
+export const useNearEndScreen = ({ distance = '350px', once = true } = {}) => {
   const [isNearScreen, setShow] = useState(false)
   const fromRef = useRef()
+
+  const { setNextPage } = moviesSlice.actions;
+  const dispatch = useDispatch();
+  const { getMovies } = useApp();
 
   useEffect(() => {
     let observer: IntersectionObserver;
@@ -35,5 +43,24 @@ export default function useNearEndScreen({ distance = '350px', once = true } = {
     return () => observer && observer.disconnect()
   })
 
-  return { isNearScreen, fromRef }
+
+  const debounceLoadMore = useCallback(
+    debounceFn(
+      () => {
+        dispatch(setNextPage());
+      },
+      { wait: 200 }
+    ),
+    [setNextPage]
+  );
+
+  useEffect(() => {
+    if (isNearScreen) {
+      debounceLoadMore();
+      getMovies();
+    }
+  }, [isNearScreen, debounceLoadMore]);
+
+
+  return { fromRef }
 }

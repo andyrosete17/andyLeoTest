@@ -7,7 +7,6 @@ import '../styles/header.scss';
 const Header = ({ searchMovies }) => {
   const { starredMovies } = useSelector((state) => state.starred);
   const [query, setQuery] = useState('');
-
   const [queryDebounce] = useDebounce(query, 1000);
 
   useEffect(() => {
