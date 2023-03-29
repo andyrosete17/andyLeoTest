@@ -62,9 +62,8 @@ const App = () => {
   };
 
   const searchMovies = (query) => {
-    navigate('/');
-    getSearchResults(query);
-  };
+    getSearchResults(query)
+  }
 
   const getMovies = () => {
     if (movies.page > 0) {

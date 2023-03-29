@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react'
 
 export default function useNearEndScreen({ distance = '350px', once = true } = {}) {
-  const [isNearScreen, setShow] = useState(false)
+  const [isNearScreen, setIsNearScreen] = useState(false)
   const fromRef = useRef()
 
   useEffect(() => {
@@ -12,10 +12,10 @@ export default function useNearEndScreen({ distance = '350px', once = true } = {
     const onChange = (entries: any, observer: IntersectionObserver) => {
       const el = entries[0]
       if (el.isIntersecting) {
-        setShow(true)
+        setIsNearScreen(true)
         once && observer.disconnect()
       } else {
-        !once && setShow(false)
+        !once && setIsNearScreen(false)
       }
     }
 

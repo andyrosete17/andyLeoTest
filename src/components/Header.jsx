@@ -36,15 +36,15 @@ const Header = ({ searchMovies }) => {
       </nav>
 
       <div className="input-group rounded">
-        <input
-          type="search"
-          data-testid="search-movies"
-          onKeyUp={(e) => setQuery(e.target.value)}
-          className="form-control rounded"
-          placeholder="Search movies..."
-          aria-label="Search movies"
-          aria-describedby="search-addon"
-        />
+        <Link to="/" className="search-link" >
+          <input type="search" data-testid="search-movies"
+            onKeyUp={(e) => setQuery(e.target.value)} 
+            className="form-control rounded" 
+            placeholder="Search movies..." 
+            aria-label="Search movies" 
+            aria-describedby="search-addon" 
+            />
+        </Link>
       </div>
     </header>
   );
